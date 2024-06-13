@@ -1,0 +1,117 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #f3ec78, #af4261);
+    font-family: 'Arial', sans-serif;
+    color: #fff;
+}
+
+.container {
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+    font-weight: bold;
+}
+
+header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    font-weight: lighter;
+    margin-bottom: 20px;
+}
+
+.calculator {
+    display: grid;
+    grid-template-rows: 1fr 3fr;
+    width: 320px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #fff;
+    margin: 0 auto;
+}
+
+.display {
+    grid-row: 1;
+    background-color: #222;
+    color: #fff;
+    font-size: 2em;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.buttons {
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 1px;
+}
+
+.btn {
+    font-size: 1.5em;
+    padding: 20px;
+    border: none;
+    background-color: #e0e0e0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+    outline: none;
+}
+
+.btn:hover {
+    background-color: #d0d0d0;
+    transform: translateY(1px);
+}
+
+.btn[data-operator] {
+    background-color: #ff8c00;
+    color: #fff;
+}
+
+.btn[data-operator]:hover {
+    background-color: #ff7f00;
+}
+
+.btn#clear {
+    background-color: #ff4c4c;
+    color: #fff;
+}
+
+.btn#clear:hover {
+    background-color: #ff3b3b;
+}
+
+.btn#equals {
+    grid-column: span 2;
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.btn#equals:hover {
+    background-color: #45a049;
+}
+
+.btn#plus{
+    grid-row: span 2;
+}
+
+footer {
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+    font-size: 0.9em;
+}
