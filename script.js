@@ -4,8 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const buttonSound = document.getElementById('button-sound');
 
     let currentInput = '';
-    let operator = '';
-    let previousInput = '';
+    let expression = '';
     let resultDisplayed = false;
 
     function playSound(){
@@ -20,8 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (button.id === 'clear') {
                 currentInput = '';
-                previousInput = '';
-                operator = '';
+                expression = '';
                 display.textContent = '0';
                 return;
             }
@@ -34,22 +32,22 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (button.hasAttribute('data-operator')) {
                 if (currentInput === '') return;
-                if (previousInput !== '') {
-                    currentInput = calculate(previousInput, currentInput, operator);
-                }
-                operator = button.getAttribute('data-operator');
-                previousInput = currentInput;
+                expression += currentInput + button.getAttribute('data-operator');
                 currentInput = '';
-                display.textContent = previousInput + ' ' + buttonValue;
+                display.textContent = expression;
                 return;
             }
 
             if (button.id === 'equals') {
-                if (previousInput === '' || currentInput === '' || operator === '') return;
-                currentInput = calculate(previousInput, currentInput, operator);
+                if (currentInput === '') return;
+                expression += currentInput;
+                try {
+                    currentInput = evaluateExpression(expression).toString();
+                } catch (e) {
+                    currentInput = 'Error';
+                }
                 display.textContent = currentInput;
-                previousInput = '';
-                operator = '';
+                expression = '';
                 resultDisplayed = true;
                 return;
             }
@@ -61,24 +59,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (buttonValue === '.' && currentInput.includes('.')) return;
             currentInput += buttonValue;
-            display.textContent = previousInput + ' ' + (operator === '*' ? 'x' : operator === '/' ? '÷' : operator) + ' ' + currentInput;
+            display.textContent = expression + currentInput;
         });
     });
 
-    function calculate(a, b, operator) {
-        const num1 = parseFloat(a);
-        const num2 = parseFloat(b);
-        switch (operator) {
-            case '+':
-                return (num1 + num2).toString();
-            case '-':
-                return (num1 - num2).toString();
-            case '*':
-                return (num1 * num2).toString();
-            case '/':
-                return (num1 / num2).toString();
-            default:
-                return '';
-        }
+    function evaluateExpression(expr) {
+        return Function(`'use strict'; return (${expr})`)();
     }
 });
